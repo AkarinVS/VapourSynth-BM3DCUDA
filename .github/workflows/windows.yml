@@ -73,16 +73,17 @@ jobs:
       shell: bash
       run: for arch in haswell skylake icelake-client znver1 znver2 znver3; do
           cmake -S . -B build_cpu -G Ninja -LA
-            -D CMAKE_BUILD_TYPE=Release
+            -D CMAKE_BUILD_TYPE=Debug
             -D ENABLE_CUDA=OFF
             -D ENABLE_CPU=ON
             -D VAPOURSYNTH_INCLUDE_DIRECTORY="$(pwd)\vapoursynth\include"
             -D CMAKE_CXX_COMPILER="$(pwd)/llvm/bin/clang++.exe"
             -D CMAKE_CXX_FLAGS="-mtune=${arch} -ffast-math"
-            -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+            -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDebug
           && cmake --build build_cpu --verbose
           && cmake --install build_cpu --prefix temp
-          && mv temp/bin/bm3dcpu.dll install/bin/bm3dcpu-${arch}.dll -v;
+          && mv temp/bin/bm3dcpu.dll install/bin/bm3dcpu-${arch}.dll -v
+          && mv temp/bin/bm3dcpu.pdb install/bin/bm3dcpu-${arch}.pdb -v;
         done
 
     - name: Prepare for upload
