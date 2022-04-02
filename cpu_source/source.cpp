@@ -54,6 +54,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <assert.h>
 
 #include <VapourSynth.h>
 #include <VSHelper.h>
@@ -408,6 +409,9 @@ static inline void load_3d_group_temporal(__m256 dst[64],
         int y { index_y[i] };
         int z { index_z[i] };
 
+        assert(x >= 0);
+        assert(y >= 0);
+        assert(z >= 0);
         load_block(&dst[i * 8], &srcps[z][y * stride + x], stride);
     }
 }
