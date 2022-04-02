@@ -796,6 +796,10 @@ static inline void bm3d(
             std::array<int, 8> index_y;
             std::array<int, 8> index_z;
 
+            index_x.fill(x);
+            index_y.fill(y);
+            index_z.fill(center);
+
             if constexpr (temporal) {
                 decltype(srcps) input;
                 if constexpr (final_) {
